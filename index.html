@@ -167,6 +167,21 @@
                         </li>
                         <li>
                             <span class="toggle-button" onclick="toggleSubcategories(this)"></span>
+                            Honduras: Tegucigalpa <button onclick="moveToLocation([14.087, -87.205])">go</button>
+                            <ul class="sub-subcategory">
+                                <li><input type="checkbox" id="tegucigalpa-dec-2015"> 2015 Dec</li>
+                                <li><input type="checkbox" id="tegucigalpa-dec-2016"> 2016 Dec</li>
+                                <li><input type="checkbox" id="tegucigalpa-mar-2018"> 2018 Mar</li>
+                                <li><input type="checkbox" id="tegucigalpa-mar-2019"> 2019 Mar</li>
+                                <li><input type="checkbox" id="tegucigalpa-apr-2020"> 2020 Apr</li>
+                                <li><input type="checkbox" id="tegucigalpa-mar-2022"> 2022 Mar</li>
+                                <li><input type="checkbox" id="tegucigalpa-jan-2023"> 2023 Jan</li>
+                                <li><input type="checkbox" id="tegucigalpa-jan-2024"> 2024 Jan</li>
+                                <li><input type="checkbox" id="tegucigalpa-grid-z16"> Zoom level 16 grids</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span class="toggle-button" onclick="toggleSubcategories(this)"></span>
                             Venezuela: Caracas <button onclick="moveToLocation([10.496, -66.906])">go</button>
                             <ul class="sub-subcategory">
                                 <li><input type="checkbox" id="caracas-mar-2014"> 2014 Mar</li>
@@ -228,6 +243,18 @@
                                 <li><input type="checkbox" id="karachi-grid-z16"> Zoom level 16 grids</li>
                             </ul>
                         </li>
+                        <li>
+                            <span class="toggle-button" onclick="toggleSubcategories(this)"></span>
+                            Sri Lanka: Colombo <button onclick="moveToLocation([6.931, 79.851])">go</button>
+                            <ul class="sub-subcategory">
+                                <li><input type="checkbox" id="colombo-dec-2015"> 2015 Dec</li>
+                                <li><input type="checkbox" id="colombo-dec-2016"> 2016 Dec</li>
+                                <li><input type="checkbox" id="colombo-jan-2020"> 2020 Jan</li>
+                                <li><input type="checkbox" id="colombo-may-2022"> 2022 May</li>
+                                <li><input type="checkbox" id="colombo-mar-2023"> 2023 Mar</li>
+                                <li><input type="checkbox" id="colombo-grid-z16"> Zoom level 16 grids</li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -281,6 +308,14 @@
             attribution: '&copy; Images from ESRI World Imagery Wayback'});
 
         var BaseLayer10321 = L.tileLayer('https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/10321/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: '&copy; Images from ESRI World Imagery Wayback'});
+
+        var BaseLayer11475 = L.tileLayer('https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/11475/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: '&copy; Images from ESRI World Imagery Wayback'});
+
+        var BaseLayer12576 = L.tileLayer('https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/12576/{z}/{y}/{x}', {
             maxZoom: 19,
             attribution: '&copy; Images from ESRI World Imagery Wayback'});
 
@@ -345,6 +380,10 @@
             attribution: '&copy; Images from ESRI World Imagery Wayback'});
 
         var BaseLayer29387 = L.tileLayer('https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/29387/{z}/{y}/{x}', {
+            maxZoom: 19,
+            attribution: '&copy; Images from ESRI World Imagery Wayback'});
+
+        var BaseLayer31026 = L.tileLayer('https://wayback.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/31026/{z}/{y}/{x}', {
             maxZoom: 19,
             attribution: '&copy; Images from ESRI World Imagery Wayback'});
 
@@ -642,6 +681,193 @@
                         });
                     })
             });
+
+
+// Honduras JSON fetch
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_27946_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaDec2015Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff00ff",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-dec-2015').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaDec2015Polygon.addTo(map); 
+                        BaseLayer27946.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaDec2015Polygon); 
+                        map.removeLayer(BaseLayer27946); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_25521_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaDec2016Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#0032ff",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-dec-2016').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaDec2016Polygon.addTo(map); 
+                        BaseLayer25521.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaDec2016Polygon); 
+                        map.removeLayer(BaseLayer25521); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_12576_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaMar2018Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#fbff00",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-mar-2018').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaMar2018Polygon.addTo(map); 
+                        BaseLayer12576.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaMar2018Polygon); 
+                        map.removeLayer(BaseLayer12576); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_16062_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaMar2019Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#00fff3",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-mar-2019').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaMar2019Polygon.addTo(map); 
+                        BaseLayer16062.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaMar2019Polygon); 
+                        map.removeLayer(BaseLayer16062); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_119_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaApr2020Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff0000",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-apr-2020').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaApr2020Polygon.addTo(map); 
+                        BaseLayer119.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaApr2020Polygon); 
+                        map.removeLayer(BaseLayer119); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_17825_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaMar2022Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#00ff0c",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-mar-2022').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaMar2022Polygon.addTo(map); 
+                        BaseLayer17825.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaMar2022Polygon); 
+                        map.removeLayer(BaseLayer17825); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_25982_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaJan2023Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff7800",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-jan-2023').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaJan2023Polygon.addTo(map); 
+                        BaseLayer25982.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaJan2023Polygon); 
+                        map.removeLayer(BaseLayer25982); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HON_TGU_32553_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaJan2024Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff00a2",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('tegucigalpa-jan-2024').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaJan2024Polygon.addTo(map); 
+                        BaseLayer32553.addTo(map); 
+                    } else {
+                        map.removeLayer(tegucigalpaJan2024Polygon); 
+                        map.removeLayer(BaseLayer32553); 
+                    }
+                });
+
+            });
+
 
 
 // PAK JSON fetch
@@ -1905,7 +2131,371 @@
             });
 
 
+// Egypt JSON fetch
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_31026_simplify10.json')
+            .then(response => response.json())
+            .then(data => {
+                var cairoJul2015Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff00ff",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('cairo-jul-2015').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoJul2015Polygon.addTo(map); // Add polygon layer
+                        BaseLayer31026.addTo(map); // Add alternate base layer
+                    } else {
+                        map.removeLayer(cairoJul2015Polygon); // Remove polygon layer
+                        map.removeLayer(BaseLayer31026); // Remove alternate layer
+                    }
+                });
+
+            });
+
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_18289_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var cairoJan2019Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#0032ff",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('cairo-jan-2019').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoJan2019Polygon.addTo(map); 
+                        BaseLayer18289.addTo(map); 
+                    } else {
+                        map.removeLayer(cairoJan2019Polygon); 
+                        map.removeLayer(BaseLayer18289); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_9812_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var cairoJul2020Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#fbff00",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('cairo-jul-2020').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoJul2020Polygon.addTo(map); 
+                        BaseLayer9812.addTo(map); 
+                    } else {
+                        map.removeLayer(cairoJul2020Polygon); 
+                        map.removeLayer(BaseLayer9812); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_44710_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var cairoNov2021Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#00fff3",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('cairo-nov-2021').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoNov2021Polygon.addTo(map); 
+                        BaseLayer44710.addTo(map); 
+                    } else {
+                        map.removeLayer(cairoNov2021Polygon); 
+                        map.removeLayer(BaseLayer44710); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_7110_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var cairoMay2022Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff0000",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('cairo-may-2022').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoMay2022Polygon.addTo(map); 
+                        BaseLayer7110.addTo(map); 
+                    } else {
+                        map.removeLayer(cairoMay2022Polygon); 
+                        map.removeLayer(BaseLayer7110); 
+                    }
+                });
+
+            });
+
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_17632_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var cairoMar2023Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#00ff0c",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('cairo-mar-2023').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoMar2023Polygon.addTo(map); 
+                        BaseLayer17632.addTo(map); 
+                    } else {
+                        map.removeLayer(cairoMar2023Polygon); 
+                        map.removeLayer(BaseLayer17632); 
+                    }
+                });
+
+            });
+
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_32553_simplify10.json') 
+            .then(response => response.json())
+            .then(data => {
+                var cairoJul2023Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff7800",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                document.getElementById('cairo-jul-2023').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoJul2023Polygon.addTo(map); 
+                        BaseLayer32553.addTo(map); 
+                    } else {
+                        map.removeLayer(cairoJul2023Polygon); 
+                        map.removeLayer(BaseLayer32553); 
+                    }
+                });
+
+            });
+
+
+// Egypt JSON fetch
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/Colombo_31026_simplify25.json') // Ensure the file name matches your GeoJSON file
+            .then(response => response.json())
+            .then(data => {
+                // Create a GeoJSON layer from the loaded data
+                var colomboDec2015Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ff0000",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                // Add event listener for checkbox to toggle polygon layer and switch base map
+                document.getElementById('colombo-dec-2015').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        colomboDec2015Polygon.addTo(map); // Add polygon layer
+                        BaseLayer31026.addTo(map); // Add alternate base layer
+                    } else {
+                        map.removeLayer(colomboDec2015Polygon); // Remove polygon layer
+                        map.removeLayer(BaseLayer31026); // Remove alternate layer
+                    }
+                });
+
+            });
+
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/Colombo_25521_simplify25.json') // Ensure the file name matches your GeoJSON file
+            .then(response => response.json())
+            .then(data => {
+                // Create a GeoJSON layer from the loaded data
+                var colomboDec2016Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#fbff00",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                // Add event listener for checkbox to toggle polygon layer and switch base map
+                document.getElementById('colombo-dec-2016').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        colomboDec2016Polygon.addTo(map); // Add polygon layer
+                        BaseLayer25521.addTo(map); // Add alternate base layer
+                    } else {
+                        map.removeLayer(colomboDec2016Polygon); // Remove polygon layer
+                        map.removeLayer(BaseLayer25521); // Remove alternate layer
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/Colombo_18289_simplify25.json') // Ensure the file name matches your GeoJSON file
+            .then(response => response.json())
+            .then(data => {
+                // Create a GeoJSON layer from the loaded data
+                var colomboJan2020Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#00ff0c",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                // Add event listener for checkbox to toggle polygon layer and switch base map
+                document.getElementById('colombo-jan-2020').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        colomboJan2020Polygon.addTo(map); // Add polygon layer
+                        BaseLayer18289.addTo(map); // Add alternate base layer
+                    } else {
+                        map.removeLayer(colomboJan2020Polygon); // Remove polygon layer
+                        map.removeLayer(BaseLayer18289); // Remove alternate layer
+                    }
+                });
+
+            });
+
+
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/Colombo_11475_simplify25.json') // Ensure the file name matches your GeoJSON file
+            .then(response => response.json())
+            .then(data => {
+                // Create a GeoJSON layer from the loaded data
+                var colomboMay2022Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#00fff3",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                // Add event listener for checkbox to toggle polygon layer and switch base map
+                document.getElementById('colombo-may-2022').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        colomboMay2022Polygon.addTo(map); // Add polygon layer
+                        BaseLayer11475.addTo(map); // Add alternate base layer
+                    } else {
+                        map.removeLayer(colomboMay2022Polygon); // Remove polygon layer
+                        map.removeLayer(BaseLayer11475); // Remove alternate layer
+                    }
+                });
+
+            });
+
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/Colombo_17632_simplify25.json') // Ensure the file name matches your GeoJSON file
+            .then(response => response.json())
+            .then(data => {
+                // Create a GeoJSON layer from the loaded data
+                var colomboMar2023Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#0032ff",
+                        weight: 2,
+                        opacity: 0.5
+                    }
+                });
+
+                // Add event listener for checkbox to toggle polygon layer and switch base map
+                document.getElementById('colombo-mar-2023').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        colomboMar2023Polygon.addTo(map); // Add polygon layer
+                        BaseLayer17632.addTo(map); // Add alternate base layer
+                    } else {
+                        map.removeLayer(colomboMar2023Polygon); // Remove polygon layer
+                        map.removeLayer(BaseLayer17632); // Remove alternate layer
+                    }
+                });
+
+            });
+
+
 // Add zoom level 16 grids
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/EGY_Cairo_grid_z16.json')
+            .then(response => response.json())
+            .then(data => {
+                var cairoZL16Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ffffff",
+                        weight: 1,
+                        opacity: 1,
+                        fill: false
+                    }
+                });
+
+                document.getElementById('cairo-grid-z16').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        cairoZL16Polygon.addTo(map);
+                    } else {
+                        map.removeLayer(cairoZL16Polygon); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/LKA_Colombo_grid_z16.json')
+            .then(response => response.json())
+            .then(data => {
+                var colomboZL16Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ffffff",
+                        weight: 1,
+                        opacity: 1,
+                        fill: false
+                    }
+                });
+
+                document.getElementById('colombo-grid-z16').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        colomboZL16Polygon.addTo(map);
+                    } else {
+                        map.removeLayer(colomboZL16Polygon); 
+                    }
+                });
+
+            });
+
+        fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/HND_Tegucigalpa_grid_z16.json')
+            .then(response => response.json())
+            .then(data => {
+                var tegucigalpaZL16Polygon = L.geoJSON(data, {
+                    style: {
+                        color: "#ffffff",
+                        weight: 1,
+                        opacity: 1,
+                        fill: false
+                    }
+                });
+
+                document.getElementById('tegucigalpa-grid-z16').addEventListener('change', function (e) {
+                    if (e.target.checked) {
+                        tegucigalpaZL16Polygon.addTo(map);
+                    } else {
+                        map.removeLayer(tegucigalpaZL16Polygon); 
+                    }
+                });
+
+            });
+
         fetch('https://raw.githubusercontent.com/jeasurk-yang/SEGSLUM/refs/heads/main/IND_Mumbai_grid_z16.json')
             .then(response => response.json())
             .then(data => {

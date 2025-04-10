@@ -9,25 +9,44 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.shapefile/leaflet.shapefile.js"></script>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh; /* Full height of the viewport */
-        }
         #header {
+            background-color: white;
+            color: black;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-family: 'Poppins', sans-serif;
+        }
+        #header-left {
+            font-size: 18px;
+        }
+        #header-right {
+            display: flex;
+            font-size: 20px;
+            gap: 15px;
+        }
+        #header-right button {
+            background-color: white;
+            color: grey;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        #footer {
             background-color: #333;
             color: #fff;
-            padding: 15px;
+            padding: 10px;
             text-align: center;
-            font-size: 24px;
+            font-size: 14px;
         }
         #container {
             display: flex;
             flex: 1;
-            height: calc(100vh - 60px); /* Adjust height based on header size */
+            height: calc(100vh - 100px);
+	    transition: all 0.3s ease;
         }
         #sidebar {
             width: 300px;
@@ -35,10 +54,29 @@
             background: #f4f4f4;
             border-right: 1px solid #ccc;
             overflow-y: auto;
+	    transition: width 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
         }
+        #sidebar.collapsed {
+    	    width: 0;
+    	    padding: 0;
+    	    opacity: 0;
+    	    overflow: hidden;
+    	    border-right: none;
+        }
+
+        #footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+
         #map {
             flex: 1;
-            height: 100%; /* Fill the available height within the container */
+            height: 100%;
+	    transition: all 0.3s ease;
         }
         .subcategory {
             margin-left: 25px; /* Indent sub-items */
@@ -65,15 +103,33 @@
         .collapsed .toggle-button {
             transform: rotate(0deg); /* Pointing down */
         }
+        .hidden {
+            display: none;
+        }
+
+        /* Styling for the content of the sections */
+        .content-container {
+            padding: 20px;
+            border-left: 1px solid #ccc;
+        }
+
     </style>
 </head>
 <body>
     <div id="header">
-        SEGSLUM: Slum Detection Results from VHR Satellite Imagery
+        <div id="header-left">
+	    <button id="toggleSidebarBtn" style="margin-right: 10px;">☰</button> 
+	    SegSLUM: Detecting slums with satellite imagery</div>
+        <div id="header-right">
+            <button onclick="showContent('introduction')">-</button>
+            <button onclick="showContent('results')">-</button>
+            <button onclick="showContent('members')">-</button>
+        </div>        
     </div>
     <div id="container">
+
         <div id="sidebar">
-            <h3>Detected Slums</h3>
+            <h3>Lists of cities</h3>
             <ul>
                 <li>
                     <span class="toggle-button" onclick="toggleSubcategories(this)"></span>
@@ -262,13 +318,20 @@
         <div id="map"></div>
     </div>
 
+    <div id="footer">
+        &copy; 2025 SegSLUM Project
+    </div>
+
     <!-- Leaflet JavaScript -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         // Initialize the map
-        var map = L.map('map').setView([19.064, 72.926], 16);
+        var map = L.map('map').setView([19.096, 72.878], 17);
 
-
+        // Add scale control (bottom left)
+        L.control.scale({
+            position: 'bottomleft'
+        }).addTo(map);
 
         // Define Wayback base layers
         var defaultBaseLayer = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -2723,6 +2786,51 @@
         	li.querySelector('.subcategory, .sub-subcategory').style.display = 'block';}
         });
 
+
+        document.getElementById('toggleSidebarBtn').addEventListener('click', function () {
+             const sidebar = document.getElementById('sidebar');
+             sidebar.classList.toggle('collapsed');
+
+        setTimeout(() => {
+             map.invalidateSize();
+             }, 310); // CSS transition 시간(0.3s)보다 약간 더 길게
+
+        });
+
+    // 
+        window.addEventListener('DOMContentLoaded', function () {
+             const sidebar = document.getElementById('sidebar');
+             if (window.innerWidth < 768) {
+                 sidebar.classList.add('collapsed');
+
+                 setTimeout(() => {
+                     map.invalidateSize();
+                 }, 100);
+             }
+        });
+
+
+
     </script>
+
+    <div id="welcome-popup" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+        background-color: #d5fcff; border: 1px solid #ccc; padding: 20px; z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2); border-radius: 8px; max-width: 500px; width: 90%;">
+        <h3 style="text-align: center; margin-top: 0;">Welcome to SegSLUM!</h3>
+        <div style="text-align: left; padding: 0 10px;">
+            <p>This interactive map helps you explore urban slums around the world!</p>
+            <p>Using 60cm-per-pixel resolution satellite data, we developed an AI-method to detect slums over a decade period between 2014 and 2024.</p> 
+            <p>Our analysis identifies a trend of <strong style="background-color: #1affff; padding: 2px 4px; border-radius: 2px;">increasing slum coverage in most countries since 2020</strong>, contrary to projections in the UN-Habitat report which suggests a global decline in slum areas. </p>
+            <p>What stories will you uncover in the changing patterns of urban slums?</p>
+        </div>
+        <div style="text-align: center;">
+            <button onclick="document.getElementById('welcome-popup').style.display='none'"
+                style="margin-top: 10px; background-color: #007BFF; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                Close
+            </button>
+        </div>
+    </div>
+
+
 </body>
 </html>
